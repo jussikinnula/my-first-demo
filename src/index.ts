@@ -52,7 +52,8 @@ function init(): Promise<{ font: Font }> {
         document.body.addEventListener('mousemove', () => {
           if (!started) {
             started = true;
-            animate();
+            render();
+            setInterval(tick, 10);
             sound.play();
             resolve({ font });
           }
@@ -62,7 +63,7 @@ function init(): Promise<{ font: Font }> {
   });
 }
 
-function animate() {
+function render() {
   const currentAspect = renderer.domElement.clientWidth / renderer.domElement.clientHeight;
   if (aspect !== currentAspect) {
     aspect = currentAspect;
@@ -70,8 +71,11 @@ function animate() {
   }
 
   renderer.render(scene.scene, camera);
-  scene.animate?.();
-  requestAnimationFrame(animate);
+  requestAnimationFrame(render);
+}
+
+function tick() {
+  scene?.tick?.();
 }
 
 function delay(time: number): Promise<void> {

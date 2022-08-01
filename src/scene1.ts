@@ -61,7 +61,7 @@ export default class Scene1 implements Scene {
     this.scene.add(this.mesh);
   }
 
-  animate() {
+  tick() {
     if (this.mesh.rotation.x >= 1 || this.mesh.rotation.x <= -1) {
       this.directionUp = !this.directionUp;
     }

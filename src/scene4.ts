@@ -59,7 +59,7 @@ export default class Scene4 implements Scene {
     this.scene.add(this.mesh2);
   }
 
-  animate() {
+  tick() {
     this.mesh1.rotation.x += 0.01;
     this.mesh1.rotation.y += 0.02;
     this.mesh2.rotation.x -= 0.01;
