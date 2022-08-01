@@ -1,3 +1,5 @@
-##  A minimalistic Electron quickstart-app with TypeScripted Three.js for WebGL desktop application fun.
+## My First Demo by Spot
 
-Clone and start with `$ npm start`.
+Clone and start with `npm start` and open in browser [http://localhost:1234](http://localhost:1234).
+
+Further commands can be checked from `package.json`.
