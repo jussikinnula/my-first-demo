@@ -36,3 +36,5 @@ bower_components
 # node-waf configuration
 node_modules
 dist
+my-first-demo-win32-x64
+my-first-demo-win32-x64.zip

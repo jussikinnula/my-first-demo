@@ -9,27 +9,30 @@
     "start": "cross-env NODE_ENV=development parcel serve ./src/index.html",
     "preelectron": "npm run clean",
     "electron": "npm-run-all -p build:watch launch",
+    "build": "npm run build:prod",
     "build:prod": "cross-env NODE_ENV=production parcel build --public-url '.' --no-content-hash ./src/index.html",
     "build:dev": "cross-env NODE_ENV=development parcel build --public-url '.' --no-content-hash ./src/index.html",
     "build:watch": "cross-env NODE_ENV=development parcel watch --public-url '.' --no-content-hash ./src/index.html",
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./dist ./my-first-demo-win32-x64 ./my-first-demo-win32-x64.zip",
     "prelaunch": "wait-on ./dist/index.html",
-    "launch": "cross-env NODE_ENV=development electron ./main.js"
-  },
-  "dependencies": {
-    "@types/stats": "^0.16.30",
-    "@types/three": "^0.143.0",
-    "electron": "^19.0.10",
-    "electron-reload": "^2.0.0-alpha.1",
-    "stats.js": "^0.17.0",
-    "three": "^0.143.0",
-    "typescript": "^4.7.4"
+    "launch": "cross-env NODE_ENV=development electron",
+    "prepackage": "npm-run-all -s clean build",
+    "package": "electron-packager . my-first-demo --ignore=\"(.gitignore|.node-version|.parcel-cache|node_modules|package.json|src)\" --no-prune --platform=win32 --arch=x64",
+    "postpackage": "zip ./my-first-demo-win32-x64.zip -r ./my-first-demo-win32-x64/"
   },
   "devDependencies": {
+    "@types/stats": "^0.16.30",
+    "@types/three": "^0.143.0",
     "cross-env": "^7.0.3",
+    "electron": "^19.0.10",
+    "electron-packager": "^15.5.1",
+    "electron-reload": "^2.0.0-alpha.1",
     "npm-run-all": "^4.1.5",
     "parcel": "^2.6.2",
     "rimraf": "^3.0.2",
+    "stats.js": "^0.17.0",
+    "three": "^0.143.0",
+    "typescript": "^4.7.4",
     "wait-on": "^6.0.1"
   }
 }
