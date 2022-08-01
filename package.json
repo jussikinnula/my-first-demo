@@ -17,13 +17,14 @@
     "prelaunch": "wait-on ./dist/index.html",
     "launch": "cross-env NODE_ENV=development electron",
     "prepackage": "npm-run-all -s clean build",
-    "package": "electron-packager . my-first-demo --ignore=\"(.gitignore|.node-version|.parcel-cache|node_modules|package.json|src)\" --no-prune --platform=win32 --arch=x64",
-    "postpackage": "zip ./my-first-demo-win32-x64.zip -r ./my-first-demo-win32-x64/"
+    "package": "npx electron-packager . my-first-demo --ignore=\"(.gitignore|.node-version|.parcel-cache|node_modules|src)\" --no-prune --platform=win32 --arch=x64",
+    "postpackage": "cross-zip ./my-first-demo-win32-x64/ ./my-first-demo-win32-x64.zip"
   },
   "devDependencies": {
     "@types/stats": "^0.16.30",
     "@types/three": "^0.143.0",
     "cross-env": "^7.0.3",
+    "cross-zip-cli": "^1.0.0",
     "electron": "^19.0.10",
     "electron-packager": "^15.5.1",
     "electron-reload": "^2.0.0-alpha.1",
