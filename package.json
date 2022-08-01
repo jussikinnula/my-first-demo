@@ -1,6 +1,6 @@
 {
   "name": "my-first-demo",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "My First Demo",
   "author": "Jussi Kinnula <jussi.kinnula@gmail.com>",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "build:watch": "cross-env NODE_ENV=development parcel watch --public-url '.' --no-content-hash ./src/index.html",
     "clean": "rimraf ./dist ./my-first-demo-win32-x64 ./my-first-demo-win32-x64.zip",
     "prelaunch": "wait-on ./dist/index.html",
-    "launch": "cross-env NODE_ENV=development electron",
+    "launch": "cross-env NODE_ENV=development electron .",
     "prepackage": "npm-run-all -s clean build",
     "package": "npx electron-packager . my-first-demo --ignore=\"(.gitignore|.node-version|.parcel-cache|node_modules|src)\" --no-prune --platform=win32 --arch=x64",
     "postpackage": "cross-zip ./my-first-demo-win32-x64/ ./my-first-demo-win32-x64.zip"

@@ -10,6 +10,10 @@ import Scene2 from './scene2';
 import Scene3 from './scene3';
 import Scene4 from './scene4';
 
+const PX_WIDTH = 320;
+const ASPECT_X = 16;
+const ASPECT_Y = 9;
+
 class EmptyScene implements Scene {
   scene = new THREE.Scene();
 }
@@ -28,12 +32,10 @@ function init(): Promise<{ font: Font }> {
     camera.position.z = 1000;
 
     renderer = new THREE.WebGLRenderer();
-    renderer.setSize(320, 240);
+    renderer.setSize(PX_WIDTH, PX_WIDTH / ASPECT_X * ASPECT_Y);
 
     document.body.appendChild(renderer.domElement);
 
-    renderer.domElement.style.width = '100%';
-    renderer.domElement.style.height = '100%';
     renderer.domElement.addEventListener('click', () => {
       (window as any).electronAPI?.toggleFullscreen?.();
     });
@@ -52,26 +54,37 @@ function init(): Promise<{ font: Font }> {
         document.body.addEventListener('mousemove', () => {
           if (!started) {
             started = true;
+            resize();
             render();
             setInterval(tick, 10);
             sound.play();
             resolve({ font });
           }
         });
+
+        window.addEventListener('resize', resize);
       });
     });
   });
 }
 
 function render() {
-  const currentAspect = renderer.domElement.clientWidth / renderer.domElement.clientHeight;
-  if (aspect !== currentAspect) {
-    aspect = currentAspect;
-    camera.updateProjectionMatrix();
-  }
-
   renderer.render(scene.scene, camera);
   requestAnimationFrame(render);
+}
+
+function resize() {
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  if (width / height >= ASPECT_X / ASPECT_Y) {
+    width = window.innerHeight / ASPECT_Y * ASPECT_X;
+  } else {
+    height = window.innerWidth / ASPECT_X * ASPECT_Y;
+  }
+  console.log('setting size', window.innerWidth);
+  renderer.domElement.style.width = `${width}px`;
+  renderer.domElement.style.height = `${height}px`;
+  camera.updateProjectionMatrix();
 }
 
 function tick() {
