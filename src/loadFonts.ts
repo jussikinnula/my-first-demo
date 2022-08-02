@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 
 import hyperspaceFontURL from 'url:./hyperspace.json.raw';
