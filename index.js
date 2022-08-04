@@ -1,6 +1,5 @@
 const path = require('path');
-const url = require('url');
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 
 const DEVELOPMENT_MODE = process.env.NODE_ENV === 'development';
 
@@ -25,7 +24,7 @@ function createWindow() {
   mainWindow.loadFile('dist/index.html');
 
   if (DEVELOPMENT_MODE) {
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
   }
 
   mainWindow.on('closed', () => {
@@ -40,8 +39,14 @@ function toggleFullscreen() {
   mainWindow.setFullScreen(fullscreen);
 }
 
+function exitFullscreen() {
+  fullscreen = false;
+  mainWindow.setFullScreen(fullscreen);
+}
+
 app.whenReady().then(() => {
   ipcMain.handle('toggle-fullscreen', toggleFullscreen)
+  ipcMain.handle('exit-fullscreen', exitFullscreen)
   createWindow();
 
   app.on('activate', () => {

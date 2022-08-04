@@ -36,11 +36,6 @@ async function init(): Promise<{ fonts: Font[], textures: THREE.Texture[] }> {
 
   document.body.appendChild(renderer.domElement);
 
-  renderer.domElement.addEventListener('click', () => {
-    (window as any).electronAPI?.toggleFullscreen?.();
-    resize();
-  });
-
   resize();
 
   const { listener, sound } = await loadMusic();
@@ -49,6 +44,19 @@ async function init(): Promise<{ fonts: Font[], textures: THREE.Texture[] }> {
   const textures = await loadTextures();
 
   await waitForMouseMove();
+  await delay(100);
+
+  renderer.domElement.addEventListener('click', () => {
+    (window as any).electronAPI?.toggleFullscreen?.();
+    resize();
+  });
+
+  document.onkeydown = (event) => {
+    if (event.key === 'Escape') {
+      (window as any).electronAPI?.exitFullscreen?.();
+      resize();
+    }
+  };
 
   resize();
   render();
